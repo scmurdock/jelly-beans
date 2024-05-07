@@ -26,22 +26,25 @@ const formSchema = z.object({
   }),  
 })
 
-export default function BeanForm({editing, adding, setEditing, setAdding, data, setData}) {
+export default function BeanForm({editing, editingBean, adding, setEditing, setAdding, data, setData}) {
     const form = useForm({
         resolver: zodResolver(formSchema),
-        defaultValues: {
+        defaultValues: Object.keys(editingBean).length>0?editingBean:{
             name: "",
             color: "",
             flavor: "",
         },
     })
      
-      // 2. Define a submit handler.
+
     function onSubmit(values) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        adding && setData(data.length>0?[...data, values]:[values]);
+        adding && setData(data.length>0?[...data, {...values, key: data.length+1}]:[{...values, key: 1}]);
         adding && setAdding(false);
+        if (editing) {
+            const beanArray = [...data];
+            beanArray.splice(editingBean.key-1, 1, values);
+            setData(beanArray);
+        }
         editing && setEditing(false);
         console.log(values)
     }
@@ -88,7 +91,7 @@ export default function BeanForm({editing, adding, setEditing, setAdding, data, 
             </FormItem>
           )}
         />
-        <Button type="submit">Add</Button>
+        <Button type="submit">Save</Button>
       </form>
     </Form>
   )

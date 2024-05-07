@@ -19,7 +19,7 @@ import BeanForm from "./bean-form.jsx";
 
 import PropTypes from 'prop-types';
 
-import { Plus } from "lucide-react"
+import { Plus, Trash, Pencil  } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
@@ -30,7 +30,7 @@ export function DataTable({
 
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [newBean, setNewBean] = useState({});
+  const [editingBean, setEditingBean] = useState({});
   const [data, setData] = useState([]);
 
   const table = useReactTable({
@@ -42,12 +42,15 @@ export function DataTable({
   return (
     adding || editing ?
     <>
-        <BeanForm editing={editing} setEditing={setEditing} adding={adding} setAdding={setAdding} data={data} setData={setData} /> 
+        <BeanForm editingBean={editingBean} editing={editing} setEditing={setEditing} adding={adding} setAdding={setAdding} data={data} setData={setData} /> 
     </> 
     :
       <>
+      <div className="text-center">
+        <h2>Jelly Beans</h2>
+      </div>
       <div className="flex justify-end">
-        <Button variant="ghost" size="icon" onClick={()=>{setAdding(true); setNewBean({}) }}>
+        <Button variant="ghost" size="icon" onClick={()=>{setAdding(true); setEditingBean({}) }}>
           <Plus className="h-4 w-4" />
         </Button>
       </div>
@@ -74,9 +77,9 @@ export function DataTable({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, position) => (
                 <TableRow
-                  key={row.id}
+                  key={position}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -85,7 +88,21 @@ export function DataTable({
                     </TableCell>
 
                   ))}
-                  <TableCell></TableCell>
+                  <TableCell>
+                    <Button variant="ghost" size="icon" onClick={()=>{
+                      const beanArray = [...data];
+                      beanArray.splice(row.id, 1);
+                      setData(beanArray);
+                      console.log(`Delete ${row.id}`) 
+                      }}>
+                      <Trash className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="ghost" size="icon" onClick={()=>{setEditing(true); setEditingBean(data[row.id]) }}>
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                  </TableCell>                  
                 </TableRow>
               ))
             ) : (

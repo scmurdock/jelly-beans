@@ -1,8 +1,19 @@
-# React + Vite
+# Jelly Beans - by Sean Murdock
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This Jelly Bean Application is a showcase of a few technologies:
+- [React](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn](https://ui.shadcn.com/docs)
+- [Vite](https://vitejs.dev/)
 
-Currently, two official plugins are available:
+To run the application:
+- `git clone git@github.com:scmurdock/jelly-beans.git`
+- `npm install`
+- `npm run dev`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+Enjoy the show,
+
+[Sean](https://github.com/scmurdock)
+
+![Screenshot](/src/assets/jellybeans.png)
